@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mewpipe</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class="container">
+		<%= render 'layouts/header' %>
+		<div id="accueil"></div>
+		<%= render 'layouts/messages' %>
+		<%= yield %>
+		<%= render 'layouts/footer' %>
+	</div>
+	<script type="text/javascript">
+		$('.alert').delay(7000).fadeOut();
+	</script>
+</body>
+</html>

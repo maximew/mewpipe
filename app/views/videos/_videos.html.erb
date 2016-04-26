@@ -1,0 +1,54 @@
+<%= form_tag(videos_path, :method => "get", id: "search-form") do %>
+<div class="row">
+  <div class="col-md-11">
+    <div class="input-group">
+      <span class="input-group-addon">Recherche</span>
+      <%= text_field_tag :search, params[:search], placeholder: "Search videos", class: "form-control" %>
+    </div>
+  </div>
+  <div class="col-md-1">
+    <%= submit_tag "Search", :name => nil, class: "btn btn-primary glyphicon glyphicon-search" %>
+
+  </div>
+</div>
+<% end %>
+
+<br>
+<br>
+<br>
+
+<section class="row">
+  <% @videos.each do |video| %>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <h1><%= video.name %></h1>
+      <video class="img-responsive" preload="none" controls="controls" poster=<%= video.video(:thumb) %> src=<%= video.video(:original) %> >
+         <%= video.name %>
+      </video>
+      <blockquote>
+        <p><%= video.description %></p>
+        <footer><cite title="Views"><%= video.view %></cite></footer>
+      </blockquote>
+      
+      <br>
+      
+      <button type="button" class="btn btn-info btn-xs"><%= link_to 'Show', video %></button>
+
+      <% if user_signed_in? && video.user_id = current_user.id %>
+        <button type="button" class="btn btn-warning btn-xs">
+          <%= link_to 'Edit', edit_video_path(video) %>
+        </button>
+        <button type="button" class="btn btn-danger btn-xs">
+          <%= link_to 'Destroy', video, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </button>
+      <% end %>
+    </div>
+  <% end %>
+</section>
+<br>
+<div class="pager"><%= will_paginate @videos, :previous_label => 'Prev', :next_label => 'Next' %></div>
+
+<br>
+<button type="button" class="btn btn-default btn-md">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <%= link_to 'Add Video', new_video_path %>
+</button>
+<br>
